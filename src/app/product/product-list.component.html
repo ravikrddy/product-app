@@ -1,0 +1,31 @@
+<h2>Product List</h2>
+<button (click)="fetchProducts()">Fetch</button>
+
+<input [(ngModel)]="year" />
+Filtering by {{year}}
+
+<div class="flex two">
+    <div *ngFor="let product of (products|byYear:year);let i=index;let k=odd;trackBy:trackByProduct;">
+        {{product.name}} - {{product.year}}
+        <article class="card">
+            <header>
+                {{product.name}}
+            </header>
+
+            <p> Year: {{product.year}} </p>
+            <p> Price: {{product.price|currency:"INR"}} </p>
+            <p> Date: {{product.released|date:"fullDate"|uppercase}} </p>
+            <footer>
+            <like-widget [(likes)]="product.likes" (likesChanged)="likesChangedHandler($event)">
+            </like-widget>
+
+            <a class="button success" routerLink="/products/edit/{{product.id}}">Edit</a>
+            <button (click)="addToCart(product)">+Cart</button>
+
+            
+            </footer>
+
+        </article>       
+
+    </div>
+</div>
